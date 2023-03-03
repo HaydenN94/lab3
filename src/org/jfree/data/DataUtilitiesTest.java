@@ -6,10 +6,12 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 import junit.framework.TestCase;
 
-public class DataUtilitiesTest extends TestCase {
-
+public class DataUtilitiesTest extends TestCase  {
+	
+	DataUtilities dataUtilities = new DataUtilities() {};
 	private DefaultKeyedValues2D values2D;
 	private DefaultKeyedValues keyedValues;
 
@@ -109,7 +111,7 @@ public class DataUtilitiesTest extends TestCase {
 	@Test
 	public void testColumnDataInvalidInputReturnsZero(){
 		values2D.addValue(null, 0, 0);
-	    double actualColTotal = DataUtilities.calculateRowTotal(values2D, 0);
+	    double actualColTotal = DataUtilities.calculateColumnTotal(values2D, 0);
 	    
 	    assertEquals(0.0, actualColTotal);
 	}
@@ -529,5 +531,15 @@ public class DataUtilitiesTest extends TestCase {
 				assertTrue("Incorrect exception type thrown",  
 					    e.getClass().equals(InvalidParameterException.class));
 			}
+		}
+		
+	// ** Added Test For Assignment 3 	
+	//Case 7: test cumulative percentages for individual value 
+		@Test
+		public void testCumulativePercentageWithNullValue() {
+			keyedValues.addValue("1", null);
+			KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyedValues);
+		
+			assertEquals(Double.NaN, cumulativePercentages.getValue(0));
 		}
 }
